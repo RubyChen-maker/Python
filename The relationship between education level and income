@@ -1,0 +1,29 @@
+import numpy as np
+import pandas as pd
+df=pd.read_csv('income.csv')
+df
+k=[]
+t=[]
+for i in range(len(df)):
+    incomes=df.at[i,'income'].split(',')
+    k.append(incomes)
+    edu_nums=df.at[i,'edu_num']
+    t.append(edu_nums)
+k
+ks=[-1 if i==[' <=50K'] else 1 for i in k]
+tMean=np.mean(t)
+ksMean=np.mean(ks)
+tSD=np.std(t)
+ksSD=np.std(ks)
+Zt=(t-tMean)/tSD
+Zks=(ks-ksMean)/ksSD
+r=np.sum(Zt*Zks)/(len(t))
+print(r)
+import matplotlib.pyplot as plt
+plt.ylabel('收入',fontproperties='FangSong',fontsize=15)
+plt.title('收入与学历对比', fontproperties='SimHei',fontsize=18)
+
+x=[i for i in t]
+y=[j for j in ks]
+plt.scatter(x,y)
+plt.show()
