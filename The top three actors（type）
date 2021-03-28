@@ -1,0 +1,37 @@
+import pandas as pd
+df=pd.read_csv('movies.csv')
+df
+pairs=[]
+k=[]
+t=[]
+for i in range(len(df)):
+    actors=df.at[i,'Actors'].split(',')
+    k.append(actors)
+    genres=df.at[i,'Genre'].split(',')
+    t.append(genres)
+k
+for i in range(len(df)):
+    ki=k[i]
+    ti=t[i]
+    for a in ki:
+        for b in ti:
+            pair=(a,b)
+            pairs.append(pair)
+pairs
+pairs=sorted(pairs,key=lambda item:item[0])
+index=[item[0] for item in pairs]
+data=[item[1] for item in pairs]
+df1=pd.DataFrame({'Actors':index,'Genre':data})
+result=df1.groupby('Actors',as_index=False).count()
+result.columns=['Actors','Genres']
+result
+result.sort_values('Genres')
+result.nlargest(3,'Genres')
+import matplotlib.pyplot as plt
+Actors=[1,2,3]
+Genres=[31,30,25]
+plt.ylabel('参演电影类型数', fontproperties='FangSong',fontsize=15)
+plt.xlabel('Mark Wahlberg,Christian Bale,Woody Harrelson', fontproperties='FangSong',fontsize=15)
+plt.title(' 参演电影类型最多的三位演员', fontproperties='SimHei', fontsize=18)
+plt.bar(Actors,Genres)
+plt.show()
