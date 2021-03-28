@@ -1,0 +1,16 @@
+import jieba
+import wordcloud
+from matplotlib import pyplot as plt
+f=open ('宇宙杂物论.txt','r',encoding='gbk')
+txt=f.read()
+f.close()
+
+wordList=jieba.lcut(txt)
+wcstr=' '.join(wordList)
+
+wc=wordcloud.WordCloud(
+    r'c:\windows\fonts\msyh.ttc',width=640,height=480,background_color='white')
+
+wcim=wc.generate(wcstr)
+wcim.to_image().save(r'd:\wc_news_whulib.png')
+plt.imshow(wcim)
